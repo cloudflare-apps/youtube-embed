@@ -1,7 +1,7 @@
 (function(){
   if (!document.addEventListener || !window.JSON) return;
 
-  fullRe = /(?:https?:\/\/)?(?:www\.)?youtube.com\/(watch|playlist)?(v|list)=([a-zA-Z0-9]+)/i
+  fullRe = /(?:https?:\/\/)?(?:www\.)\?youtube.com\/(watch|playlist)?(v|list)=([a-zA-Z0-9]+)/i
   shortRe = /(?:https?:\/\/)?youtu.be\/([a-zA-Z0-9]+)/i
 
   var parseURL = function(url) {
@@ -15,11 +15,10 @@
     } else {
       match = shortRe.exec(url);
 
-      id = match[1];
-
-      if (!match){
+      if (!match)
         return null;
-      }
+
+      id = match[1];
     }
 
     return {type: type, id: id}
