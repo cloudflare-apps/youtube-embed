@@ -9,7 +9,7 @@
 
     var type = 'watch';
     var id;
-    if (match){
+    if (match) {
       type = match[1];
       id = match[3];
     } else {
@@ -26,12 +26,12 @@
       }
     }
 
-    return {type: type, id: id}
-  }
+    return {type: type, id: id};
+  };
 
   var options = INSTALL_OPTIONS;
 
-  var add = function(){
+  var add = function() {
     for (var i=0; i < options.embeds.length; i++) {
       if (!options.embeds[i].url || !options.embeds[i].location || !options.embeds[i].location.selector) return;
 
@@ -39,25 +39,25 @@
       if (!info)
         continue;
 
-      var embed = "//www.youtube.com/embed"
+      var embed = "//www.youtube.com/embed";
 
-      if (info.type == "watch"){
+      if (info.type == "watch") {
         embed += "/" + info.id + "?";
       } else {
         embed += "?listType=playlist&list=" + info.id + "&";
       }
 
-      if (options.embeds[i].autoplay){
-        embed += "autoplay=1"
+      if (options.embeds[i].autoplay) {
+        embed += "autoplay=1";
       }
 
       var el = Eager.createElement(options.embeds[i].location);
-      el.innerHTML = '<iframe type="text/html" style="max-width: 100%" width="640" height="390" src="' + embed + '" frameborder="0"/>'
+      el.innerHTML = '<iframe type="text/html" style="max-width: 100%" width="640" height="390" src="' + embed + '" frameborder="0"/>';
     }
-  }
+  };
 
   if (document.readyState == 'loading')
     document.addEventListener('DOMContentLoaded', add);
   else
     add();
-})()
+})();
