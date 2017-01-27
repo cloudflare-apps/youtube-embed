@@ -51,7 +51,7 @@
         embed += "autoplay=1";
       }
 
-      var el = Eager.createElement(options.embeds[i].location);
+      var el = INSTALL.createElement(options.embeds[i].location);
       el.innerHTML = '<iframe type="text/html" style="max-width: 100%" width="640" height="390" src="' + embed + '" frameborder="0"/>';
     }
   };
