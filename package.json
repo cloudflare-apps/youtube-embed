@@ -1,0 +1,31 @@
+{
+  "name": "cloudflare-youtube",
+  "version": "0.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "lint": "standard ./source/**/*.js || true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CloudflareApps/Youtube.git"
+  },
+  "author": "Cloudflare Inc.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CloudflareApps/Youtube/issues"
+  },
+  "homepage": "https://github.com/CloudflareApps/Youtube#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "standard": "^9.0.2"
+  },
+  "standard": {
+    "globals": [
+      "INSTALL",
+      "INSTALL_OPTIONS",
+      "INSTALL_SCOPE",
+      "INSTALL_ID"
+    ]
+  }
+}

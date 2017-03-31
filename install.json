@@ -3,7 +3,7 @@
     "head": [
       {
         "type": "script",
-        "src": "./helper.js"
+        "src": "./source/app.js"
       }
     ]
   },
@@ -19,7 +19,7 @@
             "url": {
               "title": "URL",
               "type": "string",
-              "description": "The URL of the YouTube video or playlist to be embedded",
+              "description": "The URL of the YouTube video or playlist to be embedded.",
               "order": 1,
               "default": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
             },
@@ -27,7 +27,11 @@
               "title": "Location",
               "type": "object",
               "format": "element",
-              "description": "Select where on the page would you like this embed to appear",
+              "default": {
+                "selector": "body",
+                "method": "prepend"
+              },
+              "description": "Select where on the page would you like this embed to appear.",
               "order": 2
             },
             "autoplay": {
