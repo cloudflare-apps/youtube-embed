@@ -1,9 +1,12 @@
 (function () {
-  if (!document.addEventListener || !window.JSON) return
+  'use strict'
+
+  if (!document.addEventListener) return
 
   var fullRe = /(?:https?:\/\/)?(?:www\.)?youtube.com\/(watch|playlist)\?(v|list)=([a-zA-Z0-9\-_]+)/i
   var shortRe = /(?:https?:\/\/)?youtu.be\/([a-zA-Z0-9]+)(?:\?list=([a-zA-Z0-9\-_]+))?/i
   var options = INSTALL_OPTIONS
+  var container
 
   function parseURL (url) {
     var match = fullRe.exec(url)
@@ -30,14 +33,19 @@
   }
 
   function updateElement () {
+    container = INSTALL.createElement(options.location, container)
+    var content = ''
+
+    if (!container) return
+
     for (var i = 0; i < options.embeds.length; i++) {
-      if (!options.embeds[i].url || !options.embeds[i].location || !options.embeds[i].location.selector) return
+      if (!options.embeds[i].url) continue
 
       var info = parseURL(options.embeds[i].url)
 
-      if (!info) { continue }
+      if (!info) continue
 
-      var embed = '//www.youtube.com/embed'
+      var embed = 'https://www.youtube.com/embed'
 
       if (info.type === 'watch') {
         embed += '/' + info.id + '?'
@@ -49,9 +57,10 @@
         embed += 'autoplay=1'
       }
 
-      var el = INSTALL.createElement(options.embeds[i].location)
-      el.innerHTML = '<iframe type="text/html" style="max-width: 100%" width="640" height="390" src="' + embed + '" frameborder="0"/>'
+      content += '<iframe type="text/html" style="max-width: 100%" width="640" height="390" src="' + embed + '" frameborder="0"></iframe>'
     }
+
+    container.innerHTML = content
   }
 
   if (document.readyState === 'loading') {
@@ -59,4 +68,4 @@
   } else {
     updateElement()
   }
-})()
+}())

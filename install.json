@@ -9,9 +9,22 @@
   },
   "options": {
     "properties": {
+      "location": {
+        "title": "Location",
+        "type": "object",
+        "format": "element",
+        "default": {
+          "selector": "body",
+          "method": "prepend"
+        },
+        "description": "Where should the video players appear on your site?",
+        "order": 0
+      },
+
       "embeds": {
         "title": "Videos or Playlists",
         "type": "array",
+        "order": 1,
         "items": {
           "title": "Embed",
           "type": "object",
@@ -22,17 +35,6 @@
               "description": "The URL of the YouTube video or playlist to be embedded.",
               "order": 1,
               "default": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            },
-            "location": {
-              "title": "Location",
-              "type": "object",
-              "format": "element",
-              "default": {
-                "selector": "body",
-                "method": "prepend"
-              },
-              "description": "Select where on the page would you like this embed to appear.",
-              "order": 2
             },
             "autoplay": {
               "title": "Autoplay",
