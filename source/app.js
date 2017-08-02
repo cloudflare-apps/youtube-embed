@@ -6,7 +6,7 @@
   var fullRe = /(?:https?:\/\/)?(?:www\.)?youtube.com\/(watch|playlist)\?(v|list)=([a-zA-Z0-9\-_]+)/i
   var shortRe = /(?:https?:\/\/)?youtu.be\/([a-zA-Z0-9]+)(?:\?list=([a-zA-Z0-9\-_]+))?/i
   var options = INSTALL_OPTIONS
-  var container
+  var previewCache = []
 
   function parseURL (url) {
     var match = fullRe.exec(url)
@@ -33,39 +33,52 @@
   }
 
   function updateElement () {
-    container = INSTALL.createElement(options.location, container)
-    var content = ''
+    previewCache = []
 
-    if (!container) return
+    options.embeds.forEach(function (embed) {
+      if (!embed.url) return
 
-    for (var i = 0; i < options.embeds.length; i++) {
-      if (!options.embeds[i].url) continue
+      var container = INSTALL.createElement(embed.location)
+      if (!container) return
 
-      var info = parseURL(options.embeds[i].url)
-
-      if (!info) continue
-
-      var embed = 'https://www.youtube.com/embed'
-
-      if (info.type === 'watch') {
-        embed += '/' + info.id + '?'
-      } else {
-        embed += '?listType=playlist&list=' + info.id + '&'
+      if (INSTALL_ID === 'preview') {
+        previewCache.push(container)
       }
 
-      if (options.embeds[i].autoplay) {
+      var info = parseURL(embed.url)
+      if (!info) return
+
+      var iframeURL = 'https://www.youtube.com/embed'
+
+      if (info.type === 'watch') {
+        iframeURL += '/' + info.id + '?'
+      } else {
+        iframeURL += '?listType=playlist&list=' + info.id + '&'
+      }
+
+      if (embed.autoplay) {
         embed += 'autoplay=1'
       }
 
-      content += '<iframe type="text/html" style="max-width: 100%" width="640" height="390" src="' + embed + '" frameborder="0"></iframe>'
-    }
-
-    container.innerHTML = content
+      container.innerHTML = '<iframe type="text/html" style="max-width: 100%" width="640" height="390" src="' + iframeURL + '" frameborder="0"></iframe>'
+    })
   }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', updateElement)
   } else {
     updateElement()
+  }
+
+  window.INSTALL_SCOPE = {
+    setOptions: function setOptions (nextOptions) {
+      previewCache.forEach(function (element) {
+        INSTALL.createElement(null, element)
+      })
+
+      options = nextOptions
+
+      updateElement()
+    }
   }
 }())

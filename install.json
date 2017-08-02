@@ -7,20 +7,16 @@
       }
     ]
   },
+  "preview": {
+    "handlers": [
+      {
+        "options": ["_default"],
+        "execute": "INSTALL_SCOPE.setOptions(INSTALL_OPTIONS)"
+      }
+    ]
+  },
   "options": {
     "properties": {
-      "location": {
-        "title": "Location",
-        "type": "object",
-        "format": "element",
-        "default": {
-          "selector": "body",
-          "method": "prepend"
-        },
-        "description": "Where should the video players appear on your site?",
-        "order": 0
-      },
-
       "embeds": {
         "title": "Videos or Playlists",
         "type": "array",
@@ -29,6 +25,17 @@
           "title": "Embed",
           "type": "object",
           "properties": {
+            "location": {
+              "title": "Location",
+              "type": "object",
+              "format": "element",
+              "default": {
+                "selector": "body",
+                "method": "prepend"
+              },
+              "description": "Where should the video players appear on your site?",
+              "order": 0
+            },
             "url": {
               "title": "URL",
               "type": "string",
